@@ -35,5 +35,14 @@ object Chapter3Lists {
     // This works because you can call the cons method on Nil!
     // Nil.::(1) will evaluate to List(1)
     // Nil is an empty List
+
+    val names = "Kirsten" :: "Kendall" :: "Kelsey" :: "Collin" :: Nil
+    names.mkString("\n")
+    // Joins together the List with a newline.
+    // `mkString` can be called on any iteration collection (lists, sets, maps, arrays)
+
+    // `assert` checks the passed Boolean.
+    // Does nothing if it is true, throws an `AssertionError` if it is false.
+    assert(names == "Kirsten\nKendall\nKelsey\nCollin")
   }
 }
