@@ -12,14 +12,12 @@ object Spiral {
       def verticalBar = elem('|', 1, sp.height)
       def horizontalBar = elem('-', sp.width, 1)
 
-      if (direction == 0)
-        (corner beside horizontalBar) above(sp beside space)
-      else if (direction == 1)
-        (sp above space) beside (corner above verticalBar)
-      else if (direction == 2)
-        (space beside sp) above (horizontalBar beside corner)
-      else
-        (verticalBar above corner) beside (space above sp)
+      direction match {
+        case 0 => (corner beside horizontalBar) above(sp beside space)
+        case 1 => (sp above space) beside (corner above verticalBar)
+        case 2 => (space beside sp) above (horizontalBar beside corner)
+        case _ => (verticalBar above corner) beside (space above sp)
+      }
     }
   }
 
