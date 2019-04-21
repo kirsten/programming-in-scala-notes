@@ -21,18 +21,42 @@ abstract class Element {
   def height: Int = contents.length
   def width:  Int = if (height == 0) 0 else contents(0).length
 
-  def above(that: Element): Element =
+  def above(that: Element): Element = {
+    val this1 = this widen that.width
+    val that1 = that widen this.width
     // `++` operator concatenates 2 arrays
-    elem(this.contents ++ that.contents)
+    elem(this1.contents ++ that1.contents)
+  }
 
-  def beside(that: Element): Element =
+  def beside(that: Element): Element = {
+    val this1 = this heighten that.height
+    val that1 = that heighten this.height
     elem(
       for (
         // `zip` creates a new array of pairs (tuples)
         // pattern match on the pair in the `for` expression
-        (line1, line2) <- this.contents zip that.contents
+        (line1, line2) <- this1.contents zip that1.contents
       ) yield line1 + line2
     )
+  }
+
+  // Allows clients to place elements of different widths on top of one another
+  def widen(w: Int): Element =
+    if (w <= width) this
+    else {
+      val left = elem(' ', (w - width) / 2, height)
+      var right = elem(' ', w - width - left.width, height)
+      left beside this beside right
+    }
+
+  // Allows clients to place elements of different heights next to one another
+  def heighten(h: Int): Element =
+    if (h <= height) this
+    else {
+      val top = elem(' ', width, (h - height) / 2)
+      var bottom = elem(' ', width, h - height - top.height)
+      top above this above bottom
+    }
 
   override def toString = contents mkString "\n"
 }
