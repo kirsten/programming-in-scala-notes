@@ -94,3 +94,12 @@ def generalSize(x: Any) = x match {
   case m: Map[_, _] => m.size  // Matches any instance of Map with arbitrary key/values
   case _ => -1
 }
+
+// PATTERN GUARDS
+// Pattern guard comes after a pattern and starts with `if`.
+// If a pattern guard is present, the match succeeds only if the boolean evaluates to `true`.
+def simplifyAdd(e: Expr) = e match {
+  // Tip: a pattern variable can only appear once in a pattern.
+  case BinOp("+", x, y) if x == y => BinOp("*", x, Number(2))
+  case _ => e
+}
